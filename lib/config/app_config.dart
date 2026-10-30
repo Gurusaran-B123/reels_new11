@@ -15,7 +15,7 @@ class AppConfig {
   /// to the next key if one is rate-limited (HTTP 429) or rejected (401/403).
   /// ---------------------------------------------------------------------
   static const List<String> pexelsKeys = <String>[
-    'PASTE_PEXELS_API_KEY_1',
+    '58319702-8903d93fec27785a78090fbdb',
     'PASTE_PEXELS_API_KEY_2',
     'PASTE_PEXELS_API_KEY_3',
   ];
