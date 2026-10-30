@@ -72,6 +72,18 @@ def patch_gallery_saver() -> None:
     if "namespace" not in g:
         g = re.sub(r"android\s*\{", f"android {{\n    namespace '{namespace}'", g, count=1)
     g = re.sub(r"compileSdkVersion\s+\d+", "compileSdkVersion 34", g)
+
+    # Java and Kotlin must target the same JVM version (Kotlin follows JDK 17).
+    if "VERSION_17" not in g:
+        g = re.sub(r"compileOptions\s*\{[^}]*\}", "", g)
+        g = re.sub(
+            r"android\s*\{",
+            "android {\n    compileOptions {\n"
+            "        sourceCompatibility JavaVersion.VERSION_17\n"
+            "        targetCompatibility JavaVersion.VERSION_17\n    }",
+            g,
+            count=1,
+        )
     gradle.write_text(g)
 
     if pkg_match:
