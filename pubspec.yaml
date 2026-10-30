@@ -1,0 +1,47 @@
+name: reels_new11
+description: Reels new11 - vertical short video app by deplofree.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # Video + network
+  video_player: ^2.9.2
+  http: ^0.13.6 # gallery_saver requires http 0.13.x
+  connectivity_plus: ^6.1.0
+
+  # Local storage (no backend)
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.4
+
+  # Share + download to gallery
+  share_plus: ^10.1.2
+  gallery_saver: ^2.3.2
+
+  # State management
+  provider: ^6.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: assets/icon/app_icon.png
+  adaptive_icon_background: "#1A1A1A"
+  adaptive_icon_foreground: assets/icon/app_icon_foreground.png
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
