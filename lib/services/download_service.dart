@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:gallery_saver/gallery_saver.dart';
+import 'package:gal/gal.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
@@ -10,7 +10,7 @@ class DownloadService {
   DownloadService._();
 
   /// Downloads the video to a temp file, then saves it to the phone gallery
-  /// (album "Reels new11") with gallery_saver. Returns true on success.
+  /// (album "Reels new11"). Returns true on success.
   static Future<bool> saveToGallery(
     ReelVideo video, {
     void Function(double progress)? onProgress,
@@ -18,10 +18,17 @@ class DownloadService {
     final client = http.Client();
     File? file;
     try {
+      // Ask for gallery permission first.
+      if (!await Gal.hasAccess(toAlbum: true)) {
+        final granted = await Gal.requestAccess(toAlbum: true);
+        if (!granted) return false;
+      }
+
       final dir = await getTemporaryDirectory();
       file = File('${dir.path}/reels_new11_${video.id}.mp4');
 
-      final response = await client.send(http.Request('GET', Uri.parse(video.url)));
+      final response =
+          await client.send(http.Request('GET', Uri.parse(video.url)));
       if (response.statusCode != 200) return false;
 
       final total = response.contentLength ?? 0;
@@ -35,11 +42,8 @@ class DownloadService {
       await sink.flush();
       await sink.close();
 
-      final saved = await GallerySaver.saveVideo(
-        file.path,
-        albumName: 'Reels new11',
-      );
-      return saved ?? false;
+      await Gal.putVideo(file.path, album: 'Reels new11');
+      return true;
     } catch (_) {
       return false;
     } finally {
