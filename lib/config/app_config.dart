@@ -16,7 +16,7 @@ class AppConfig {
   /// to the next key if one is rate-limited (HTTP 429) or rejected.
   /// ---------------------------------------------------------------------
   static const List<String> pixabayKeys = <String>[
-    'PASTE_PIXABAY_API_KEY_1',
+    '58319702-8903d93fec27785a78090fbdb',
     'PASTE_PIXABAY_API_KEY_2',
     'PASTE_PIXABAY_API_KEY_3',
   ];
