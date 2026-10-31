@@ -110,7 +110,7 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: 22),
           Center(
             child: Text(
-              'Videos provided by Pexels',
+              'Videos provided by Pixabay',
               style: TextStyle(color: subtle, fontSize: 12),
             ),
           ),
