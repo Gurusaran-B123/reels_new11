@@ -152,15 +152,20 @@ class _LikedPlayerScreen extends StatelessWidget {
           Positioned.fill(
             child: ReelsPager(videos: videos, initialIndex: initialIndex),
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: IconButton(
-                style: IconButton.styleFrom(
-                  backgroundColor: Colors.black.withAlpha(110),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.black.withAlpha(110),
+                  ),
+                  icon: const Icon(Icons.arrow_back_rounded,
+                      color: Colors.white),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
-                icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
-                onPressed: () => Navigator.of(context).pop(),
               ),
             ),
           ),
