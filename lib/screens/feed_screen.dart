@@ -90,6 +90,7 @@ class _FeedScreenState extends State<FeedScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
+        fit: StackFit.expand, // reels fill the whole screen
         children: [
           Positioned.fill(child: body),
           SafeArea(
