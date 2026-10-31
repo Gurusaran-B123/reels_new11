@@ -46,7 +46,7 @@ class _ConnectivityGateState extends State<ConnectivityGate> {
       final results = await Connectivity().checkConnectivity();
       if (results.any((r) => r != ConnectivityResult.none)) {
         try {
-          final lookup = await InternetAddress.lookup('api.pexels.com')
+          final lookup = await InternetAddress.lookup('pixabay.com')
               .timeout(const Duration(seconds: 5));
           online = lookup.isNotEmpty && lookup.first.rawAddress.isNotEmpty;
         } catch (_) {
