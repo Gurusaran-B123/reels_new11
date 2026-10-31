@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,6 +69,7 @@ class _ReelItemState extends State<ReelItem> {
     if (c == null || !_ready) return;
     if (widget.isActive) {
       setState(() => _userPaused = false);
+      c.setVolume(context.read<MuteProvider>().muted ? 0.0 : 1.0);
       c.play();
     } else {
       c.pause();
@@ -169,7 +171,11 @@ class _ReelItemState extends State<ReelItem> {
     final muted = context.watch<MuteProvider>().muted;
     final liked = context.watch<LikesProvider>().isLiked(widget.video.id);
     final c = _controller;
-    if (c != null && _ready) c.setVolume(muted ? 0 : 1);
+    if (c != null && _ready) c.setVolume(muted ? 0.0 : 1.0);
+    final landscape = c != null &&
+        _ready &&
+        c.value.size.width > 0 &&
+        c.value.size.width >= c.value.size.height;
 
     return ColoredBox(
       color: Colors.black,
@@ -184,11 +190,29 @@ class _ReelItemState extends State<ReelItem> {
               errorBuilder: (_, __, ___) => const SizedBox.shrink(),
             ),
 
-          // Video (cover-fit, like Instagram).
+          // Landscape clips: blurred copy of the thumbnail fills the screen,
+          // the video itself is shown in full on top (no heavy zoom/crop).
+          if (_ready && c != null && landscape && widget.video.thumb.isNotEmpty)
+            Positioned.fill(
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
+                child: Image.network(
+                  widget.video.thumb,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                ),
+              ),
+            ),
+          if (_ready && c != null && landscape)
+            Positioned.fill(
+              child: ColoredBox(color: Colors.black.withAlpha(110)),
+            ),
+
+          // Video: portrait fills the screen, landscape is shown in full.
           if (_ready && c != null)
             ClipRect(
               child: FittedBox(
-                fit: BoxFit.cover,
+                fit: landscape ? BoxFit.contain : BoxFit.cover,
                 child: SizedBox(
                   width: c.value.size.width,
                   height: c.value.size.height,
