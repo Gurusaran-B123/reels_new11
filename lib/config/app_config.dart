@@ -10,14 +10,15 @@ class AppConfig {
   static const String version = '1.0.0';
 
   /// ---------------------------------------------------------------------
-  /// PASTE YOUR 3 PEXELS API KEYS HERE  (free: https://www.pexels.com/api/)
+  /// PASTE YOUR PIXABAY API KEYS HERE  (free: https://pixabay.com/api/docs/)
+  /// Up to 3 keys. If you have only 1 or 2, just leave the others as they are.
   /// The app rotates through them on every request and automatically jumps
-  /// to the next key if one is rate-limited (HTTP 429) or rejected (401/403).
+  /// to the next key if one is rate-limited (HTTP 429) or rejected.
   /// ---------------------------------------------------------------------
-  static const List<String> pexelsKeys = <String>[
-    '58319702-8903d93fec27785a78090fbdb',
-    'PASTE_PEXELS_API_KEY_2',
-    'PASTE_PEXELS_API_KEY_3',
+  static const List<String> pixabayKeys = <String>[
+    'PASTE_PIXABAY_API_KEY_1',
+    'PASTE_PIXABAY_API_KEY_2',
+    'PASTE_PIXABAY_API_KEY_3',
   ];
 
   /// Topics used for the default feed (one is picked at random on launch).
